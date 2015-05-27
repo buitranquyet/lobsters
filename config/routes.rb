@@ -29,13 +29,14 @@ Lobsters::Application.routes.draw do
     get "/threads" => "comments#threads"
     get "/threads/:user" => "comments#threads"
 
-    get "/login" => "login#index"
-    post "/login" => "login#login"
+    # get "/login" => "login#index"
+    # post "/login" => "login#login"
     post "/logout" => "login#logout"
 
-    get "/signup" => "signup#index"
-    post "/signup" => "signup#signup"
-    get "/signup/invite" => "signup#invite"
+    # POST/GET signup in Signup controller is using invitations
+    # get "/signup" => "signup#index"
+    # post "/signup" => "signup#signup"
+    # get "/signup/invite" => "signup#invite"
 
     get "/login/forgot_password" => "login#forgot_password",
       :as => "forgot_password"
@@ -90,27 +91,27 @@ Lobsters::Application.routes.draw do
     get "/u" => "users#tree"
     get "/u/:username" => "users#show", :as => "user", :format => /html|json/
 
-    get "/settings" => "settings#index"
-    post "/settings" => "settings#update"
-    post "/settings/pushover" => "settings#pushover"
-    get "/settings/pushover_callback" => "settings#pushover_callback"
-    post "/settings/delete_account" => "settings#delete_account",
-      :as => "delete_account"
+    # get "/settings" => "settings#index"
+    # post "/settings" => "settings#update"
+    # post "/settings/pushover" => "settings#pushover"
+    # get "/settings/pushover_callback" => "settings#pushover_callback"
+    # post "/settings/delete_account" => "settings#delete_account",
+    #   :as => "delete_account"
 
     get "/filters" => "filters#index"
     post "/filters" => "filters#update"
 
-    post "/invitations" => "invitations#create"
-    get "/invitations" => "invitations#index"
-    get "/invitations/request" => "invitations#build"
-    post "/invitations/create_by_request" => "invitations#create_by_request",
-      :as => "create_invitation_by_request"
-    get "/invitations/confirm/:code" => "invitations#confirm_email"
-    post "/invitations/send_for_request" => "invitations#send_for_request",
-      :as => "send_invitation_for_request"
-    get "/invitations/:invitation_code" => "signup#invited"
-    post "/invitations/delete_request" => "invitations#delete_request",
-      :as => "delete_invitation_request"
+    # post "/invitations" => "invitations#create"
+    # get "/invitations" => "invitations#index"
+    # get "/invitations/request" => "invitations#build"
+    # post "/invitations/create_by_request" => "invitations#create_by_request",
+    #   :as => "create_invitation_by_request"
+    # get "/invitations/confirm/:code" => "invitations#confirm_email"
+    # post "/invitations/send_for_request" => "invitations#send_for_request",
+    #   :as => "send_invitation_for_request"
+    # get "/invitations/:invitation_code" => "signup#invited"
+    # post "/invitations/delete_request" => "invitations#delete_request",
+    #   :as => "delete_invitation_request"
 
     get "/moderations" => "moderations#index"
     get "/moderations/page/:page" => "moderations#index"
@@ -121,5 +122,9 @@ Lobsters::Application.routes.draw do
     if defined?(BbsController) || Rails.env.development?
       get "/bbs" => "bbs#index"
     end
+
+    get '/auth/twitter/callback', to: 'sessions#create', as: 'callback'
+    get '/auth/failure', to: 'sessions#error', as: 'failure'
+
   end
 end

@@ -32,7 +32,12 @@ gem "oauth"
 # for parsing incoming mail
 gem "mail"
 
+
+gem 'omniauth'
+gem 'omniauth-twitter'
+
 group :test, :development do
+  gem 'pry-rails'
   gem "rspec-rails", "~> 2.6"
   gem "machinist"
   gem "sqlite3"

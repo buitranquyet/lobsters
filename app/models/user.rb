@@ -1,4 +1,7 @@
+require 'securerandom'
 class User < ActiveRecord::Base
+
+  has_many :authorizations
   has_many :stories,
     -> { includes :user }
   has_many :comments
@@ -269,5 +272,24 @@ class User < ActiveRecord::Base
       where("comments.user_id <> votes.user_id AND " <<
         "stories.user_id <> votes.user_id").
       order("id DESC")
+  end
+
+  def self.find_for_oauth(auth)
+    identity = Authorization.find_or_create_by(provider: 'twitter', uid: auth.uid)
+    user = identity.user
+
+    if user.nil?
+      user = User.new(
+        username: auth.info.nickname,
+        email: "#{auth.uid}@#{auth.provider}.com",
+        password: SecureRandom.hex(4) )
+      user.save!
+    end
+
+    if identity.user != user
+      identity.user = user
+      identity.save!
+    end
+    user
   end
 end

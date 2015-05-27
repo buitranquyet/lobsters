@@ -8,7 +8,7 @@ class="story <%= story.vote && story.vote[:vote] == 1 ? "upvoted" : "" %>
     <% if @user %>
       <a class="upvoter"></a>
     <% else %>
-      <%= link_to "", login_path, :class => "upvoter" %>
+      <%= link_to "", '/auth/twitter', :class => "upvoter" %>
     <% end %>
     <div class="score"><%= story.score %></div>
   </div>
