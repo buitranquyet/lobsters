@@ -26,6 +26,19 @@
 
 <div class="box">
   <div class="boxline">
+  <% if f.object.url_is_editable_by_user?(@user) %>
+    <%= f.label :url, "URL:", :class => "required" %>
+    <%= f.text_field :url, :autocomplete => "off" %>
+    <%= button_tag "Fetch Title", :id => "story_fetch_title",
+      :type => "button" %>
+  <% elsif !f.object.new_record? && !f.object.url.blank? %>
+    <%= f.label :url, "URL:", :class => "required" %>
+    <div class="d">
+    <a href="<%= f.object.url %>"><%= f.object.url %></a>
+    </div>
+  <% end %>
+  </div>
+  <div class="boxline">
     <%= f.label :title, "Title:", :class => "required" %>
     <%= f.text_field :title, :maxlength => 100, :autocomplete => "off"  %>
   </div>
@@ -55,20 +68,12 @@
       :placeholder => "Description",
       :autocomplete => "off" %>
   </div>
-
-  <div class="boxline markdown_help_toggler">
-    <a href="#" id="story_guidelines_toggler">
-      Story submission guidelines
-    </a>
-    <div id="story_guidelines" style="<%= show_guidelines?? "" :
-    "display: none;" %>">
-      <ul>
-        <li><p>
-        If no tags clearly apply to the story you are submitting, chances
-        are it does not belong here.  Do not overreach with tags if they
-        are not the primary focus of the story.
-        </p></li>
-      </ul>
-    </div>
-  </div>
 </div>
+<script>
+  $(document).ready(function() {
+    $("#story_fetch_title").click(function() {
+      Lobsters.fetchURLTitle($(this), $("#story_url"), $("#story_title"));
+      return false;
+    });
+  });
+</script>
