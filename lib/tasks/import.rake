@@ -25,9 +25,9 @@ task twitterbot: :environment do
     username = tweet.user.screen_name
     tag = Tag.first
     user = User.find_by_username(username)
-
+    description = "#{content} (via [Twitter](https://twitter.com/#{username}/status/#{tweet.id}))"
     if user && !Story.find_by(user_id: user.id, tweet_id: tweet.id)
-      story = Story.new(user_id: user.id, url: url, title: content, description: content, tweet_id: tweet.id, tags_a: [tag.tag])
+      story = Story.new(user_id: user.id, url: url, title: content, description: description, tweet_id: tweet.id, tags_a: [tag.tag])
       story.save
       puts "created #{tweet.id} - #{content} - #{username}"
     end
