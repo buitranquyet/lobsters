@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150527020057) do
+ActiveRecord::Schema.define(version: 20150528025247) do
 
   create_table "authorizations", force: true do |t|
     t.string   "provider"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(version: 20150527020057) do
     t.integer  "merged_story_id"
     t.datetime "unavailable_at"
     t.string   "twitter_id",             limit: 20
+    t.string   "tweet_id"
   end
 
   add_index "stories", ["hotness"], name: "hotness_idx", using: :btree

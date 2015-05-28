@@ -36,6 +36,9 @@ gem "mail"
 gem 'omniauth'
 gem 'omniauth-twitter'
 
+gem 'twitter'
+gem 'whenever', require: false
+
 group :test, :development do
   gem 'pry-rails'
   gem "rspec-rails", "~> 2.6"
