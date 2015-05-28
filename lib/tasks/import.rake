@@ -20,6 +20,8 @@ task twitterbot: :environment do
   client.search("#musklevel", result_type: "recent").each do |tweet|
     content = tweet.text.gsub(/[#@]\w+/, '').strip
     url = URI.extract(content, /http(s)?/).first
+    content = content.gsub(url.to_s, '') if url
+
     username = tweet.user.screen_name
     tag = Tag.first
     user = User.find_by_username(username)
