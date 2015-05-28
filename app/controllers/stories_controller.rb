@@ -15,6 +15,8 @@ class StoriesController < ApplicationController
     @story = Story.new(story_params)
     @story.user_id = @user.id
 
+    @story.tags_a = [Tag.first.tag] if @story.tags_a.blank?
+
     if @story.valid? && !(@story.already_posted_story && !@story.seen_previous)
       if @story.save
         Countinual.count!("#{Rails.application.shortname}.stories.submitted",
